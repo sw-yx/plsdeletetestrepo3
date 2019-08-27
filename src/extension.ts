@@ -1,5 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from "vscode"
+import { ShowDeploys } from "./deploys"
 
 // this method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -13,6 +14,14 @@ export function activate(context: vscode.ExtensionContext) {
     // Display a message box to the user
     vscode.window.showInformationMessage(
       "Netlify extension successfully loaded!"
+    )
+
+    vscode.window.registerTreeDataProvider("showDeploys", new ShowDeploys())
+    vscode.commands.registerCommand(
+      "showDeploys.selectNode",
+      (item: vscode.TreeItem) => {
+        console.log(item.label)
+      }
     )
   })
 
