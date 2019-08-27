@@ -28,6 +28,14 @@
           "icon": "logo.svg"
         }
       ]
+    },
+    "views": {
+      "netlifytest": [
+        {
+          "id": "showDeploys",
+          "name": "Show Deploys"
+        }
+      ]
     }
   },
   "scripts": {
