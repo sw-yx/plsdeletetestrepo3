@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
       "Netlify extension successfully loaded!"
     )
 
+    // Initialize treeview
     vscode.window.registerTreeDataProvider("showDeploys", new ShowDeploys())
     vscode.commands.registerCommand(
       "showDeploys.selectNode",
