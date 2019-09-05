@@ -132,7 +132,7 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
  *
  */
 
-function handleChildElements(netlifySite: NetlifySiteDataType, element: vscode.TreeItem) {
+function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevelItem) {
   if (element.contextValue !== 'TopLevelItem') throw new Error('you should not see this')
 
   // if (!this.netlifySite) return null
@@ -162,15 +162,21 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: vscode.T
       return null
     case 'Functions':
       return null
+    default:
+      // make typescript yell at us if we add a new label and forget to handle it
+      // https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html#switch
+      const _exhaustiveCheck: never = element.label
+      return _exhaustiveCheck
   }
   // ultimate fallback, hope not to get here
   return null
 }
 
+type TopLevelLabels = 'Deploys' | 'Forms' | 'Functions' | 'Performance'
 // we're going to have to do a lot better than this but this is an mvp
 export class TopLevelItem extends vscode.TreeItem {
   constructor(
-    public readonly label: string,
+    public readonly label: TopLevelLabels,
     public readonly description: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
     public readonly command?: vscode.Command,
