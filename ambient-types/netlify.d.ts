@@ -1,61 +1,30 @@
-declare module 'netlify'
-
 declare module '@netlify/cli-utils' {
-  // import { ComponentType, StyleHTMLAttributes } from "react"
-
-  // export interface BaseTabProps<A> {
-  //   children?: React.ReactNode
-  //   as?: ComponentType
-  //   rest?: A
-  //   style?: StyleHTMLAttributes
-  // }
-
-  // export interface TabsProps<A = React.HTMLAttributes<HTMLDivElement>> extends BaseTabProps<A> {
-  //   children: React.ReactNode
-
-  //   defaultIndex?: number
-  //   index?: number
-  //   onChange?(index: number): void
-  // }
-  // export class Tabs extends React.Component<TabsProps> {}
-
-  // export type TabListProps<A = React.HTMLAttributes<HTMLDivElement>> = BaseTabProps<A>
-  // export class TabList extends React.Component<TabListProps> {}
-
-  // export type TabPanelsProps<A = React.HTMLAttributes<HTMLDivElement>> = BaseTabProps<A>
-  // export class TabPanels extends React.Component<TabPanelsProps> {}
-
-  // export type TabPanelProps<A = React.HTMLAttributes<HTMLDivElement>> = BaseTabProps<A>
-  // export class TabPanel extends React.Component<TabPanelProps> {}
-
-  // export interface TabProps<A = React.HTMLAttributes<HTMLDivElement>> extends BaseTabProps<A> {
-  //   disabled?: boolean
-  // }
-  export class NetlifyCLIUtilsCommand {
+  class NetlifyCLIUtilsCommand {
     init(path?: string): void
-    netlify: {
-      /** Netlify API - don't access directly, refer to `netlify api --list` */
-      api: any
-      site: {
-        root?: string
-        configPath?: string
-        id?: string
-      }
-      config?: {
-        build?: {
-          command?: string
-          functions?: string
-          publish?: string
-        }
-      }
-      globalConfig?: {
-        path?: string
-      }
-      state: {
-        root: string
-        path: string
-      }
+    netlify: NetlifyCLIData
+  }
+}
+type NetlifyCLIData = {
+  /** Netlify API - don't access directly, refer to `netlify api --list` */
+  api: any
+  site: {
+    root?: string
+    configPath?: string
+    id?: string
+  }
+  config?: {
+    build?: {
+      command?: string
+      functions?: string
+      publish?: string
     }
+  }
+  globalConfig?: {
+    path?: string
+  }
+  state: {
+    root: string
+    path: string
   }
 }
 
