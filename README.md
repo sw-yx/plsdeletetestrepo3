@@ -1,20 +1,23 @@
 # netlify-ext-setup README
 
-This is the README for your extension "netlify-ext-setup". After writing up a brief description, we recommend including the following sections.
+Netlify DX VSCode Extension
+
+- Repo: https://github.com/sdras/netlify-ext-setup
+- Project: https://github.com/netlify/developer-experience/projects/3
+- Notion: https://www.notion.so/netlify/VS-Code-Kickoff-59d1a073cad74d72b8e8038550ace917
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+TODO: add feature list, demo gif
 
-For example if there is an image subfolder under your extension project workspace:
+## Local Development
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Clone this repo and install dependencies
+2. press F5 (fn + F5 on a Mac)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+---
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+> everything below is generated boilerplate we may want to add to our readme later
 
 ## Extension Settings
 
@@ -24,8 +27,8 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+- `myExtension.enable`: enable/disable this extension
+- `myExtension.thing`: set to `blah` to do something
 
 ## Known Issues
 
@@ -47,19 +50,4 @@ Fixed issue #.
 
 Added features X, Y, and Z.
 
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+---
