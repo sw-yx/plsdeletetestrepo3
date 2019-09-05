@@ -1,0 +1,338 @@
+{
+  "siteData": {
+    "id": "a84f3ffa-3206-4630-9aad-cf8f532e0aeb",
+    "site_id": "a84f3ffa-3206-4630-9aad-cf8f532e0aeb",
+    "plan": "nf_team_dev",
+    "plan_data": {
+      "title": "Netlify Team Free",
+      "asset_acceleration": true,
+      "form_processing": true,
+      "cdn_propagation": "partial",
+      "build_gc_exchange": "buildbot-gc",
+      "build_node_pool": "buildbot-external-ssd",
+      "build_cluster": "buildbot-3",
+      "domain_aliases": true,
+      "secure_site": false,
+      "prerendering": true,
+      "proxying": true,
+      "ssl": "custom",
+      "rate_cents": 0,
+      "yearly_rate_cents": 0,
+      "cdn_network": "free_cdn_network",
+      "ipv6_domain": "cdn.makerloop.com",
+      "branch_deploy": true,
+      "managed_dns": true,
+      "geo_ip": true,
+      "split_testing": true,
+      "id": "nf_team_dev",
+      "identity": {
+        "active_users": { "included": 1000, "unit": "users", "used": 0 },
+        "invite_only_users": { "included": 5, "unit": "users", "used": 0 }
+      },
+      "analytics": { "pageviews": { "included": 250000, "unit": "pageviews", "used": 1689 } },
+      "functions": {
+        "invocations": { "included": 125000, "unit": "requests", "used": 0 },
+        "runtime": { "included": 360000, "unit": "seconds", "used": 0 }
+      }
+    },
+    "ssl_plan": null,
+    "premium": false,
+    "claimed": true,
+    "name": "scout-videos-51664",
+    "custom_domain": "www.swyx.io",
+    "domain_aliases": [],
+    "password": null,
+    "notification_email": null,
+    "url": "https://www.swyx.io",
+    "admin_url": "https://app.netlify.com/sites/scout-videos-51664",
+    "deploy_id": "5d6fc747265780000849ea8f",
+    "build_id": "",
+    "deploy_url": "http://master.scout-videos-51664.netlify.com",
+    "state": "current",
+    "screenshot_url": "https://353a23c500dde3b2ad58-c49fe7e7355d384845270f4a7a0a7aa1.ssl.cf2.rackcdn.com/5d6fc747265780000849ea8f/screenshot.png",
+    "created_at": "2017-10-22T06:39:33.162Z",
+    "updated_at": "2019-09-04T14:19:39.752Z",
+    "user_id": "596656398ebdd9656a9a6c98",
+    "error_message": null,
+    "ssl": true,
+    "ssl_url": "https://www.swyx.io",
+    "force_ssl": true,
+    "ssl_status": null,
+    "max_domain_aliases": 100,
+    "build_settings": {
+      "cmd": "#na",
+      "dir": "public",
+      "env": {},
+      "created_at": "2019-08-04T07:45:29.972Z",
+      "updated_at": "2019-08-04T07:45:29.972Z",
+      "public_repo": true,
+      "private_logs": null,
+      "allowed_branches": ["master"],
+      "functions_dir": null,
+      "installation_id": 364546,
+      "skip_prs": null,
+      "review_untrusted_builds": null,
+      "provider": "github",
+      "repo_type": "git",
+      "repo_url": "https://github.com/sw-yx/swyxdotio",
+      "repo_branch": "master",
+      "repo_path": "sw-yx/swyxdotio",
+      "base": null,
+      "deploy_key_id": null
+    },
+    "processing_settings": {
+      "css": { "bundle": true, "minify": true },
+      "js": { "bundle": true, "minify": true },
+      "images": { "optimize": true },
+      "html": { "pretty_urls": true },
+      "skip": true
+    },
+    "prerender": "netlify",
+    "prerender_headers": null,
+    "deploy_hook": "https://api.netlify.com/hooks/github",
+    "published_deploy": {
+      "id": "5d6fc747265780000849ea8f",
+      "site_id": "a84f3ffa-3206-4630-9aad-cf8f532e0aeb",
+      "build_id": "5d6fc747265780000849ea90",
+      "state": "ready",
+      "name": "scout-videos-51664",
+      "url": "https://www.swyx.io",
+      "ssl_url": "https://www.swyx.io",
+      "admin_url": "https://app.netlify.com/sites/scout-videos-51664",
+      "deploy_url": "http://master.scout-videos-51664.netlify.com",
+      "deploy_ssl_url": "https://master--scout-videos-51664.netlify.com",
+      "created_at": "2019-09-04T14:16:39.023Z",
+      "updated_at": "2019-09-04T14:19:39.750Z",
+      "user_id": "596656398ebdd9656a9a6c98",
+      "error_message": null,
+      "required": [],
+      "required_functions": [],
+      "commit_ref": "e254137c8b1bf1eb4e6f213aa071c4468970cba4",
+      "review_id": null,
+      "branch": "master",
+      "commit_url": "https://github.com/sw-yx/swyxdotio/commit/e254137c8b1bf1eb4e6f213aa071c4468970cba4",
+      "skipped": null,
+      "locked": null,
+      "log_access_attributes": {
+        "type": "firebase",
+        "url": "https://netlify-builds3.firebaseio.com/builds/5d6fc747265780000849ea90/log",
+        "endpoint": "https://netlify-builds3.firebaseio.com",
+        "path": "/builds/5d6fc747265780000849ea90/log",
+        "token": "tdzrkqHD5fgw8tGRytePPiRpzfNivfSRx08xHYKm"
+      },
+      "title": "js",
+      "review_url": null,
+      "published_at": "2019-09-04T14:19:22.766Z",
+      "context": "production",
+      "deploy_time": 160,
+      "available_functions": [],
+      "summary": {
+        "status": "ready",
+        "messages": [
+          {
+            "type": "info",
+            "title": "17 new files uploaded",
+            "description": "6 generated pages and 11 assets changed.",
+            "details": "New pages include:\n- index.html\n- talks/index.html\n- talks/2/index.html\n- talks/intro-to-typescript/index.html\n- talks/react-typescript/index.html\n- talks/react-not-reactive/index.html\n"
+          },
+          {
+            "type": "info",
+            "title": "3 redirect rules processed",
+            "description": "All redirect rules deployed without errors.",
+            "details": ""
+          },
+          {
+            "type": "info",
+            "title": "No header rules processed",
+            "description": "This deploy did not include any header rules. [Learn more about headers](https://www.netlify.com/docs/headers-and-basic-auth/).",
+            "details": ""
+          },
+          {
+            "type": "info",
+            "title": "All linked resources are secure",
+            "description": "Congratulations! No insecure mixed content found in your files.",
+            "details": null
+          }
+        ]
+      },
+      "screenshot_url": "https://353a23c500dde3b2ad58-c49fe7e7355d384845270f4a7a0a7aa1.ssl.cf2.rackcdn.com/5d6fc747265780000849ea8f/screenshot.png",
+      "site_capabilities": {
+        "title": "Netlify Team Free",
+        "asset_acceleration": true,
+        "form_processing": true,
+        "cdn_propagation": "partial",
+        "build_gc_exchange": "buildbot-gc",
+        "build_node_pool": "buildbot-external-ssd",
+        "build_cluster": "buildbot-3",
+        "domain_aliases": true,
+        "secure_site": false,
+        "prerendering": true,
+        "proxying": true,
+        "ssl": "custom",
+        "rate_cents": 0,
+        "yearly_rate_cents": 0,
+        "cdn_network": "free_cdn_network",
+        "ipv6_domain": "cdn.makerloop.com",
+        "branch_deploy": true,
+        "managed_dns": true,
+        "geo_ip": true,
+        "split_testing": true,
+        "id": "nf_team_dev",
+        "identity": {
+          "active_users": { "included": 1000, "unit": "users", "used": 0 },
+          "invite_only_users": { "included": 5, "unit": "users", "used": 0 }
+        },
+        "analytics": { "pageviews": { "included": 250000, "unit": "pageviews", "used": 1689 } },
+        "functions": {
+          "invocations": { "included": 125000, "unit": "requests", "used": 0 },
+          "runtime": { "included": 360000, "unit": "seconds", "used": 0 }
+        }
+      },
+      "committer": "sw-yx",
+      "skipped_log": null
+    },
+    "managed_dns": true,
+    "jwt_secret": null,
+    "jwt_roles_path": "app_metadata.roles",
+    "account_slug": "sw-yx",
+    "account_name": "shawn wang's team",
+    "account_type": "Starter",
+    "capabilities": {
+      "title": "Netlify Team Free",
+      "asset_acceleration": true,
+      "form_processing": true,
+      "cdn_propagation": "partial",
+      "build_gc_exchange": "buildbot-gc",
+      "build_node_pool": "buildbot-external-ssd",
+      "build_cluster": "buildbot-3",
+      "domain_aliases": true,
+      "secure_site": false,
+      "prerendering": true,
+      "proxying": true,
+      "ssl": "custom",
+      "rate_cents": 0,
+      "yearly_rate_cents": 0,
+      "cdn_network": "free_cdn_network",
+      "ipv6_domain": "cdn.makerloop.com",
+      "branch_deploy": true,
+      "managed_dns": true,
+      "geo_ip": true,
+      "split_testing": true,
+      "id": "nf_team_dev",
+      "identity": {
+        "active_users": { "included": 1000, "unit": "users", "used": 0 },
+        "invite_only_users": { "included": 5, "unit": "users", "used": 0 }
+      },
+      "analytics": { "pageviews": { "included": 250000, "unit": "pageviews", "used": 1689 } },
+      "functions": {
+        "invocations": { "included": 125000, "unit": "requests", "used": 0 },
+        "runtime": { "included": 360000, "unit": "seconds", "used": 0 }
+      }
+    },
+    "active_subscription_ids": [],
+    "external_contributors_enabled": false,
+    "paid_individual_site_subscription": false,
+    "dns_zone_id": "5bce318567610c73ecfbcaf1",
+    "identity_instance_id": "5aa731bafd0efa2d579fb3c0",
+    "use_functions": true,
+    "parent_user_id": null,
+    "automatic_tls_provisioning": null,
+    "disabled": null,
+    "lifecycle_state": "active",
+    "id_domain": "a84f3ffa-3206-4630-9aad-cf8f532e0aeb.netlify.com",
+    "use_lm": null,
+    "build_image": null,
+    "automatic_tls_provisioning_expired": false,
+    "analytics_instance_id": "5d40768e60cf8600bb41902c"
+  }
+}
+
+
+
+--------------|--------------------------------------------------------------------|
+| listSites                   | https://open-api.netlify.com/#/default/listSites                   |
+| createSite                  | https://open-api.netlify.com/#/default/createSite                  |
+| getSite                     | https://open-api.netlify.com/#/default/getSite                     |
+| updateSite                  | https://open-api.netlify.com/#/default/updateSite                  |
+| deleteSite                  | https://open-api.netlify.com/#/default/deleteSite                  |
+| provisionSiteTLSCertificate | https://open-api.netlify.com/#/default/provisionSiteTLSCertificate |
+| showSiteTLSCertificate      | https://open-api.netlify.com/#/default/showSiteTLSCertificate      |
+| listSiteForms               | https://open-api.netlify.com/#/default/listSiteForms               |
+| listSiteSubmissions         | https://open-api.netlify.com/#/default/listSiteSubmissions         |
+| listSiteFiles               | https://open-api.netlify.com/#/default/listSiteFiles               |
+| listSiteAssets              | https://open-api.netlify.com/#/default/listSiteAssets              |
+| createSiteAsset             | https://open-api.netlify.com/#/default/createSiteAsset             |
+| getSiteAssetInfo            | https://open-api.netlify.com/#/default/getSiteAssetInfo            |
+| updateSiteAsset             | https://open-api.netlify.com/#/default/updateSiteAsset             |
+| deleteSiteAsset             | https://open-api.netlify.com/#/default/deleteSiteAsset             |
+| getSiteAssetPublicSignature | https://open-api.netlify.com/#/default/getSiteAssetPublicSignature |
+| getSiteFileByPathName       | https://open-api.netlify.com/#/default/getSiteFileByPathName       |
+| listSiteSnippets            | https://open-api.netlify.com/#/default/listSiteSnippets            |
+| createSiteSnippet           | https://open-api.netlify.com/#/default/createSiteSnippet           |
+| getSiteSnippet              | https://open-api.netlify.com/#/default/getSiteSnippet              |
+| updateSiteSnippet           | https://open-api.netlify.com/#/default/updateSiteSnippet           |
+| deleteSiteSnippet           | https://open-api.netlify.com/#/default/deleteSiteSnippet           |
+| getSiteMetadata             | https://open-api.netlify.com/#/default/getSiteMetadata             |
+| updateSiteMetadata          | https://open-api.netlify.com/#/default/updateSiteMetadata          |
+| listSiteBuildHooks          | https://open-api.netlify.com/#/default/listSiteBuildHooks          |
+| createSiteBuildHook         | https://open-api.netlify.com/#/default/createSiteBuildHook         |
+| getSiteBuildHook            | https://open-api.netlify.com/#/default/getSiteBuildHook            |
+| updateSiteBuildHook         | https://open-api.netlify.com/#/default/updateSiteBuildHook         |
+| deleteSiteBuildHook         | https://open-api.netlify.com/#/default/deleteSiteBuildHook         |
+| listSiteDeploys             | https://open-api.netlify.com/#/default/listSiteDeploys             |
+| createSiteDeploy            | https://open-api.netlify.com/#/default/createSiteDeploy            |
+| getSiteDeploy               | https://open-api.netlify.com/#/default/getSiteDeploy               |
+| updateSiteDeploy            | https://open-api.netlify.com/#/default/updateSiteDeploy            |
+| restoreSiteDeploy           | https://open-api.netlify.com/#/default/restoreSiteDeploy           |
+| listSiteBuilds              | https://open-api.netlify.com/#/default/listSiteBuilds              |
+| createSiteBuild             | https://open-api.netlify.com/#/default/createSiteBuild             |
+| listSiteDeployedBranches    | https://open-api.netlify.com/#/default/listSiteDeployedBranches    |
+| getSiteBuild                | https://open-api.netlify.com/#/default/getSiteBuild                |
+| updateSiteBuildLog          | https://open-api.netlify.com/#/default/updateSiteBuildLog          |
+| notifyBuildStart            | https://open-api.netlify.com/#/default/notifyBuildStart            |
+| getDNSForSite               | https://open-api.netlify.com/#/default/getDNSForSite               |
+| configureDNSForSite         | https://open-api.netlify.com/#/default/configureDNSForSite         |
+| getDeploy                   | https://open-api.netlify.com/#/default/getDeploy                   |
+| lockDeploy                  | https://open-api.netlify.com/#/default/lockDeploy                  |
+| unlockDeploy                | https://open-api.netlify.com/#/default/unlockDeploy                |
+| uploadDeployFile            | https://open-api.netlify.com/#/default/uploadDeployFile            |
+| uploadDeployFunction        | https://open-api.netlify.com/#/default/uploadDeployFunction        |
+| listForms                   | https://open-api.netlify.com/#/default/listForms                   |
+| listFormSubmissions         | https://open-api.netlify.com/#/default/listFormSubmissions         |
+| listHooksBySiteId           | https://open-api.netlify.com/#/default/listHooksBySiteId           |
+| createHookBySiteId          | https://open-api.netlify.com/#/default/createHookBySiteId          |
+| getHook                     | https://open-api.netlify.com/#/default/getHook                     |
+| updateHook                  | https://open-api.netlify.com/#/default/updateHook                  |
+| deleteHookBySiteId          | https://open-api.netlify.com/#/default/deleteHookBySiteId          |
+| enableHook                  | https://open-api.netlify.com/#/default/enableHook                  |
+| listHookTypes               | https://open-api.netlify.com/#/default/listHookTypes               |
+| createTicket                | https://open-api.netlify.com/#/default/createTicket                |
+| showTicket                  | https://open-api.netlify.com/#/default/showTicket                  |
+| exchangeTicket              | https://open-api.netlify.com/#/default/exchangeTicket              |
+| listDeployKeys              | https://open-api.netlify.com/#/default/listDeployKeys              |
+| createDeployKey             | https://open-api.netlify.com/#/default/createDeployKey             |
+| getDeployKey                | https://open-api.netlify.com/#/default/getDeployKey                |
+| deleteDeployKey             | https://open-api.netlify.com/#/default/deleteDeployKey             |
+| createSiteInTeam            | https://open-api.netlify.com/#/default/createSiteInTeam            |
+| listSitesForAccount         | https://open-api.netlify.com/#/default/listSitesForAccount         |
+| listMembersForAccount       | https://open-api.netlify.com/#/default/listMembersForAccount       |
+| addMemberToAccount          | https://open-api.netlify.com/#/default/addMemberToAccount          |
+| listPaymentMethodsForUser   | https://open-api.netlify.com/#/default/listPaymentMethodsForUser   |
+| listAccountTypesForUser     | https://open-api.netlify.com/#/default/listAccountTypesForUser     |
+| listAccountsForUser         | https://open-api.netlify.com/#/default/listAccountsForUser         |
+| createAccount               | https://open-api.netlify.com/#/default/createAccount               |
+| getAccount                  | https://open-api.netlify.com/#/default/getAccount                  |
+| updateAccount               | https://open-api.netlify.com/#/default/updateAccount               |
+| cancelAccount               | https://open-api.netlify.com/#/default/cancelAccount               |
+| listAccountAuditEvents      | https://open-api.netlify.com/#/default/listAccountAuditEvents      |
+| listFormSubmission          | https://open-api.netlify.com/#/default/listFormSubmission          |
+| deleteSubmission            | https://open-api.netlify.com/#/default/deleteSubmission            |
+| createServiceInstance       | https://open-api.netlify.com/#/default/createServiceInstance       |
+| showServiceInstance         | https://open-api.netlify.com/#/default/showServiceInstance         |
+| updateServiceInstance       | https://open-api.netlify.com/#/default/updateServiceInstance       |
+| deleteServiceInstance       | https://open-api.netlify.com/#/default/deleteServiceInstance       |
+| getServices                 | https://open-api.netlify.com/#/default/getServices                 |
+| showService                 | https://open-api.netlify.com/#/default/showService                 |
+| showServiceManifest         | https://open-api.netlify.com/#/default/showServiceManifest         |
+| getCurrentUser              | https://open-api.netlify.com/#/default/getCurrentUser              |
+'------------------------------------------------------

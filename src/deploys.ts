@@ -1,115 +1,196 @@
 import * as vscode from 'vscode'
-import * as fs from 'fs'
-import * as path from 'path'
+const NetlifyCLIUtilsCommand = require('@netlify/cli-utils')
 
-export class ShowDeploys implements vscode.TreeDataProvider<vscode.TreeItem> {
-  constructor(private workspaceRoot: string = '') {
-    console.log('called with ' + workspaceRoot)
+type NetlifySiteDataType = {
+  workspace: vscode.WorkspaceFolder
+  deploys: Deploy[]
+  netlify: NetlifyCLIData
+}
+
+export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
+  netlifySite?: NetlifySiteDataType = undefined
+  constructor(private workspaceFolders: vscode.WorkspaceFolder[] | undefined = undefined) {
+    console.log('DEBUG: parsing workspaceFolders')
+    console.time()
+
+    // the tricky thing to deal with here is there may be multiple netlify sites in multiple workspaces
+    // however this will be by far not the common use case and we shouldnt make our UI more inconvenient for that
+    // we'll just pick one, and warn if we detect more than one
+    if (workspaceFolders && workspaceFolders.length) {
+      workspaceFolders.forEach((workspace) => {
+        const {
+          uri: { fsPath },
+        } = workspace
+        const site = new NetlifyCLIUtilsCommand() // we do this to tap into the user's existing login as well as the JS API
+        site.init(fsPath) // specify projectroot
+        if (site.netlify.site.id) {
+          // there is an id! great, this is a linked site!
+          if (!this.netlifySite) {
+            site.workspace = workspace
+            this.netlifySite = site
+          } else {
+            this.warn(
+              `Multiple Netlify sites detected in multiple workspaces: 
+              ${this.netlifySite.netlify.site.id} and ${site.netlify.site.id}. 
+              This extension is only designed for one site for now.`,
+            )
+          }
+        }
+      })
+    }
+    console.timeEnd()
   }
   getTreeItem(element: vscode.TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
     return element
   }
+  async getChildren(element?: vscode.TreeItem): Promise<TopLevelItem[] | null> {
+    console.log('DEBUG: getting Children')
+    // no site loaded, don't bother to proceed
+    if (!this.netlifySite) return null
+    if (element == null) {
+      // this means we're at the top level of the tree
+      const { netlify, workspace } = this.netlifySite
+      const wsName = workspace.name
+      const siteId = netlify.site.id
+      if (siteId) {
+        try {
+          console.time()
+          const [siteData, deploys, forms] = await Promise.all([
+            netlify.api.getSite({ siteId }),
+            netlify.api.listSiteDeploys({ siteId }), // array of big objects
+            netlify.api.listSiteForms({ siteId }), // array
+          ])
+          this.netlifySite.deploys = deploys
+          // to get a list of api methods: `netlify api --list` in cli
+          const {
+            // url,
+            // custom_domain,
+            // name,
+            updated_at,
+            // screenshot_url // could be interesting to use in future
+            // admin_url
+            published_deploy: { available_functions },
+          } = siteData
 
-  getChildren(element?: vscode.TreeItem): vscode.ProviderResult<vscode.TreeItem[]> {
-    // if (element == null) {
-    //   var item = new vscode.TreeItem("Foo")
-    //   item.command = {
-    //     command: "showDeploys.selectNode",
-    //     title: "Select Node",
-    //     arguments: [item]
-    //   }
-    //   return [item]
-    // }
-    // return null
-    console.log('workspace root is ' + this.workspaceRoot)
+          // const forms2 = await netlify.api.listForms()
+          console.log({ deploys: deploys.slice(0, 5), forms: forms, available_functions })
 
-    vscode.window.showInformationMessage('workspace root is ' + this.workspaceRoot)
-    if (!this.workspaceRoot) {
-      vscode.window.showInformationMessage('No dependency in empty workspace')
-      return Promise.resolve([])
-    }
-
-    if (element) {
-      return Promise.resolve(
-        this.getDepsInPackageJson(path.join(this.workspaceRoot, 'node_modules', element.label || '', 'package.json')),
-      )
-    } else {
-      const packageJsonPath = path.join(this.workspaceRoot, 'package.json')
-      if (this.pathExists(packageJsonPath)) {
-        return Promise.resolve(this.getDepsInPackageJson(packageJsonPath))
-      } else {
-        vscode.window.showInformationMessage('Workspace has no package.json')
-        return Promise.resolve([])
-      }
-    }
-  }
-
-  /**
-   *
-   * https://github.com/microsoft/vscode-extension-samples/blob/master/tree-view-sample/src/nodeDependencies.ts
-   * Given the path to package.json, read all its dependencies and devDependencies.
-   */
-  private getDepsInPackageJson(packageJsonPath: string): Dependency[] {
-    if (this.pathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
-
-      const toDep = (moduleName: string, version: string): Dependency => {
-        if (this.pathExists(path.join(this.workspaceRoot, 'node_modules', moduleName))) {
-          return new Dependency(moduleName, version, vscode.TreeItemCollapsibleState.Collapsed)
-        } else {
-          return new Dependency(moduleName, version, vscode.TreeItemCollapsibleState.None, {
-            command: 'extension.openPackageOnNpm',
-            title: '',
-            arguments: [moduleName],
-          })
+          // console.log('sitedate', siteData)
+          console.timeEnd()
+          // const sitename = custom_domain || name
+          const parseArr = (arr: any[]) =>
+            arr.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None // dont show children if its 0 length
+          return [
+            new TopLevelItem('Deploys', updated_at, vscode.TreeItemCollapsibleState.Expanded),
+            new TopLevelItem('Forms', String(forms.length), parseArr(forms)),
+            new TopLevelItem('Performance', 'to be done', vscode.TreeItemCollapsibleState.None),
+            new TopLevelItem('Functions', String(available_functions.length), parseArr(available_functions)),
+          ]
+        } catch (e) {
+          if (e.status === 401 /* unauthorized*/) {
+            this.warn(`Log in with a different account or re-link to a site you have permission for`)
+            this.error(`Not authorized to view the currently linked site (${siteId})`)
+          }
+          if (e.status === 404 /* missing */) {
+            this.error(`The site this folder is linked to can't be found`)
+          } else {
+            this.error(e)
+          }
+          var item = new TopLevelItem(wsName, 'Errored')
+          return [item]
         }
+      } else {
+        return [new TopLevelItem(wsName, 'Not Linked')]
+        // vscode.window.showInformationMessage(
+        //   `Workspace is not linked to Netlify!
+        //   Please run "netlify init" for new site
+        //   or "netlify link" to link existing site.`,
+        // )
+        // return Promise.resolve([])
       }
-
-      const deps = packageJson.dependencies
-        ? Object.keys(packageJson.dependencies).map((dep) => toDep(dep, packageJson.dependencies[dep]))
-        : []
-      const devDeps = packageJson.devDependencies
-        ? Object.keys(packageJson.devDependencies).map((dep) => toDep(dep, packageJson.devDependencies[dep]))
-        : []
-      return deps.concat(devDeps)
     } else {
-      return []
+      // delegate child handling to a function for arguably more maintainable code
+      return handleChildElements(this.netlifySite, element)
     }
   }
 
-  private pathExists(p: string): boolean {
-    try {
-      fs.accessSync(p)
-    } catch (err) {
-      return false
-    }
-
-    return true
+  private warn(str: string) {
+    console.warn(str)
+    vscode.window.showWarningMessage(str)
+  }
+  private error(str: string) {
+    console.error(str)
+    vscode.window.showErrorMessage(str)
   }
 }
 
-export class Dependency extends vscode.TreeItem {
+/**
+ *
+ *
+ * handle individual sections one step down from top level
+ *
+ *
+ */
+
+function handleChildElements(netlifySite: NetlifySiteDataType, element: vscode.TreeItem) {
+  if (element.contextValue !== 'TopLevelItem') throw new Error('you should not see this')
+
+  // if (!this.netlifySite) return null
+  switch (element.label) {
+    case 'Deploys':
+      const deploys = netlifySite.deploys.slice(0, 5)
+      return deploys.map((deploy) => {
+        const { branch, commit_ref, title: commit_msg, published_at } = deploy
+        const short_git_ref = commit_ref && commit_ref.slice(0, 6)
+        const timeStamp = new Date(published_at).toLocaleDateString(undefined, {
+          // weekday: 'short',
+          // year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+        })
+        return new TopLevelItem(
+          `[${branch}] @ ${short_git_ref} ${timeStamp}`,
+          commit_msg,
+          vscode.TreeItemCollapsibleState.None,
+        )
+      })
+    case 'Forms':
+      return null
+    case 'Performance':
+      return null
+    case 'Functions':
+      return null
+  }
+  // ultimate fallback, hope not to get here
+  return null
+}
+
+// we're going to have to do a lot better than this but this is an mvp
+export class TopLevelItem extends vscode.TreeItem {
   constructor(
     public readonly label: string,
-    private version: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+    public readonly description: string,
+    public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
     public readonly command?: vscode.Command,
   ) {
     super(label, collapsibleState)
   }
 
   get tooltip(): string {
-    return `${this.label}-${this.version}`
+    return `TODO: Tooltip for ${this.label}`
   }
 
-  get description(): string {
-    return this.version
-  }
+  // get description(): string {
+  //   return `this description is for ${this.version}`
+  // }
 
-  iconPath = {
-    light: path.join(__filename, '..', '..', 'resources', 'light', 'dependency.svg'),
-    dark: path.join(__filename, '..', '..', 'resources', 'dark', 'dependency.svg'),
-  }
+  // // todo: add icons for deploys
+  // iconPath = {
+  //   light: path.join(__filename, '..', '..', 'resources', 'light', 'dependency.svg'),
+  //   dark: path.join(__filename, '..', '..', 'resources', 'dark', 'dependency.svg'),
+  // }
 
-  contextValue = 'dependency'
+  contextValue = 'TopLevelItem' // Docs: "If you want to show an action for specific items, you can do it by defining context of a tree item using TreeItem.contextValue and you can specify the context value for key viewItem in when expression."
 }

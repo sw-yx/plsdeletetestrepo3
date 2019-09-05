@@ -14,14 +14,22 @@ export function activate(context: vscode.ExtensionContext) {
     // Display a message box to the user
     vscode.window.showInformationMessage('Netlify extension successfully loaded!')
 
-    // Initialize treeview
-    vscode.window.registerTreeDataProvider('showDeploys', new ShowDeploys(vscode.workspace.rootPath))
     vscode.commands.registerCommand('showDeploys.selectNode', (item: vscode.TreeItem) => {
       console.log(item.label)
     })
   })
 
+  // Initialize treeview
+  // we use workspaceFolders instead of vscode.workspace.rootPath because of
+  // https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#eliminating-rootpath
+  let treeview = vscode.window.registerTreeDataProvider(
+    'showDeploys',
+    new ShowDeploys(vscode.workspace.workspaceFolders),
+  )
+  // SWYX TODO: implement workspace.onDidChangeWorkspaceFolders // https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#eliminating-rootpath
+
   context.subscriptions.push(init)
+  context.subscriptions.push(treeview)
 }
 
 // this method is called when your extension is deactivated

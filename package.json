@@ -57,6 +57,7 @@
     "vscode-test": "^1.0.2"
   },
   "dependencies": {
+    "@netlify/cli-utils": "^1.1.0",
     "netlify": "^2.4.8"
   }
 }

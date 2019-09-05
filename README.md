@@ -13,7 +13,8 @@ TODO: add feature list, demo gif
 ## Local Development
 
 1. Clone this repo and install dependencies
-2. press F5 (fn + F5 on a Mac)
+2. press F5 (fn + F5 on a Mac) to open a new vscode instance with your extension installed
+3. if you change code, you probably need to reload the vscode instance. Cmd+Shift+P and select "Developer: Reload"
 
 ---
 
