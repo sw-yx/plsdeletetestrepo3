@@ -22,6 +22,7 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
           uri: { fsPath },
         } = workspace
         const site = new NetlifyCLIUtilsCommand() // we do this to tap into the user's existing login as well as the JS API
+        // TODO: WHAT IF USER IS NOT LOGGED IN
         site.init(fsPath) // specify projectroot
         if (site.netlify.site.id) {
           // there is an id! great, this is a linked site!
@@ -43,11 +44,11 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
   getTreeItem(element: vscode.TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
     return element
   }
-  async getChildren(element?: vscode.TreeItem): Promise<TopLevelItem[] | null> {
+  async getChildren(element?: TopLevelItem): Promise<TopLevelItem[] | null> {
     console.log('DEBUG: getting Children')
     // no site loaded, don't bother to proceed
     if (!this.netlifySite) return null
-    if (element == null) {
+    if (!element) {
       // this means we're at the top level of the tree
       const { netlify, workspace } = this.netlifySite
       const wsName = workspace.name
@@ -139,8 +140,10 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevel
   switch (element.label) {
     case 'Deploys':
       const deploys = netlifySite.deploys.slice(0, 5)
+      console.log({deploys})
       return deploys.map((deploy) => {
-        const { branch, commit_ref, title: commit_msg, published_at } = deploy
+        // handle manual deploys because
+        const { branch = "MANUAL", commit_ref, title: commit_msg, published_at } = deploy
         const short_git_ref = commit_ref && commit_ref.slice(0, 6)
         const timeStamp = new Date(published_at).toLocaleDateString(undefined, {
           // weekday: 'short',
@@ -162,11 +165,11 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevel
       return null
     case 'Functions':
       return null
-    default:
-      // make typescript yell at us if we add a new label and forget to handle it
-      // https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html#switch
-      const _exhaustiveCheck: never = element.label
-      return _exhaustiveCheck
+    // default:
+    //   // make typescript yell at us if we add a new label and forget to handle it
+    //   // https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html#switch
+    //   const _exhaustiveCheck: never = element.label
+    //   return _exhaustiveCheck
   }
   // ultimate fallback, hope not to get here
   return null
@@ -176,7 +179,7 @@ type TopLevelLabels = 'Deploys' | 'Forms' | 'Functions' | 'Performance'
 // we're going to have to do a lot better than this but this is an mvp
 export class TopLevelItem extends vscode.TreeItem {
   constructor(
-    public readonly label: TopLevelLabels,
+    public readonly label: TopLevelLabels | string,
     public readonly description: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
     public readonly command?: vscode.Command,
