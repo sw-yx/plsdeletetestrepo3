@@ -32,8 +32,8 @@
     "views": {
       "netlifytest": [
         {
-          "id": "showDeploys",
-          "name": "Show Deploys"
+          "id": "netlifyTreeView",
+          "name": "Netlify Extension Tree View"
         }
       ]
     }

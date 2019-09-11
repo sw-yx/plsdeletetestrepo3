@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode'
-import { ShowDeploys } from './deploys'
+import { NetlifyTreeView } from './deploys'
 
 // this method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -9,12 +9,10 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // The commandId parameter must match the command field in package.json
   let init = vscode.commands.registerCommand('extension.netlifyInit', () => {
-    // The code you place here will be executed every time your command is executed
-
-    // Display a message box to the user
+    // to see this run, cmd + shift + P and choose "Initialize Netlify"
+    // we dont actually use this for anything real right now
     vscode.window.showInformationMessage('Netlify extension successfully loaded!')
-
-    vscode.commands.registerCommand('showDeploys.selectNode', (item: vscode.TreeItem) => {
+    vscode.commands.registerCommand('netlifyTreeView.selectNode', (item: vscode.TreeItem) => {
       console.log(item.label)
     })
   })
@@ -23,8 +21,8 @@ export function activate(context: vscode.ExtensionContext) {
   // we use workspaceFolders instead of vscode.workspace.rootPath because of
   // https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#eliminating-rootpath
   let treeview = vscode.window.registerTreeDataProvider(
-    'showDeploys',
-    new ShowDeploys(vscode.workspace.workspaceFolders),
+    'netlifyTreeView',
+    new NetlifyTreeView(vscode.workspace.workspaceFolders),
   )
   // SWYX TODO: implement workspace.onDidChangeWorkspaceFolders // https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#eliminating-rootpath
 

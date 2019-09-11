@@ -7,11 +7,11 @@ type NetlifySiteDataType = {
   netlify: NetlifyCLIData
 }
 
-export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem | TreeItemWithDescription> {
-  netlifySite?: NetlifySiteDataType = undefined
-  constructor(private workspaceFolders: vscode.WorkspaceFolder[] | undefined = undefined) {
+export class NetlifyTreeView implements vscode.TreeDataProvider<TopLevelItem | TreeItemWithDescription> {
+  netlifySite?: NetlifySiteDataType
+  constructor(private workspaceFolders: vscode.WorkspaceFolder[] | undefined) {
     console.log('DEBUG: parsing workspaceFolders')
-    console.time()
+    console.time() // for performance tracking... is this too slow? do we want to defer site initialization?
 
     // the tricky thing to deal with here is there may be multiple netlify sites in multiple workspaces
     // however this will be by far not the common use case and we shouldnt make our UI more inconvenient for that
@@ -128,7 +128,6 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevel
     case 'Deploys':
       const deploys = netlifySite.deploys.slice(0, 5)
       return deploys.map((deploy) => {
-        // handle manual deploys because
         const { branch , commit_ref, title: commit_msg, published_at } = deploy
         // TODO: TARA: check if branch == 'NULL', if it is 'null' it is a manual deploy
         const short_git_ref = commit_ref && commit_ref.slice(0, 6)
