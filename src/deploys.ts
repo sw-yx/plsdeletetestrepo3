@@ -7,7 +7,7 @@ type NetlifySiteDataType = {
   netlify: NetlifyCLIData
 }
 
-export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
+export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem | TreeItemWithDescription> {
   netlifySite?: NetlifySiteDataType = undefined
   constructor(private workspaceFolders: vscode.WorkspaceFolder[] | undefined = undefined) {
     console.log('DEBUG: parsing workspaceFolders')
@@ -44,7 +44,7 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
   getTreeItem(element: vscode.TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
     return element
   }
-  async getChildren(element?: TopLevelItem): Promise<TopLevelItem[] | null> {
+  async getChildren(element?: TopLevelItem): Promise<(TopLevelItem | TreeItemWithDescription)[] | null> {
     console.log('DEBUG: getting Children')
     // no site loaded, don't bother to proceed
     if (!this.netlifySite) return null
@@ -72,13 +72,8 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
             // admin_url
             published_deploy: { available_functions },
           } = siteData
-
-          // const forms2 = await netlify.api.listForms()
           console.log({ deploys: deploys.slice(0, 5), forms: forms, available_functions })
-
-          // console.log('sitedate', siteData)
           console.timeEnd()
-          // const sitename = custom_domain || name
           const parseArr = (arr: any[]) =>
             arr.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None // dont show children if its 0 length
           return [
@@ -97,17 +92,11 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
           } else {
             this.error(e)
           }
-          var item = new TopLevelItem(wsName, 'Errored')
+          var item = new TreeItemWithDescription(wsName, 'Errored')
           return [item]
         }
       } else {
-        return [new TopLevelItem(wsName, 'Not Linked')]
-        // vscode.window.showInformationMessage(
-        //   `Workspace is not linked to Netlify!
-        //   Please run "netlify init" for new site
-        //   or "netlify link" to link existing site.`,
-        // )
-        // return Promise.resolve([])
+        return [new TreeItemWithDescription(wsName, 'Not Linked')]
       }
     } else {
       // delegate child handling to a function for arguably more maintainable code
@@ -135,51 +124,60 @@ export class ShowDeploys implements vscode.TreeDataProvider<TopLevelItem> {
 
 function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevelItem) {
   if (element.contextValue !== 'TopLevelItem') throw new Error('you should not see this')
-
-  // if (!this.netlifySite) return null
   switch (element.label) {
     case 'Deploys':
       const deploys = netlifySite.deploys.slice(0, 5)
-      console.log({deploys})
       return deploys.map((deploy) => {
         // handle manual deploys because
-        const { branch = "MANUAL", commit_ref, title: commit_msg, published_at } = deploy
+        const { branch , commit_ref, title: commit_msg, published_at } = deploy
+        // TODO: TARA: check if branch == 'NULL', if it is 'null' it is a manual deploy
         const short_git_ref = commit_ref && commit_ref.slice(0, 6)
         const timeStamp = new Date(published_at).toLocaleDateString(undefined, {
-          // weekday: 'short',
-          // year: 'numeric',
           month: 'short',
           day: 'numeric',
           hour: 'numeric',
           minute: '2-digit',
         })
-        return new TopLevelItem(
+        return new TreeItemWithDescription(
           `[${branch}] @ ${short_git_ref} ${timeStamp}`,
           commit_msg,
           vscode.TreeItemCollapsibleState.None,
         )
       })
     case 'Forms':
+      // TODO: SARAH
       return null
     case 'Performance':
       return null
     case 'Functions':
+      // TODO: PHIL
       return null
-    // default:
-    //   // make typescript yell at us if we add a new label and forget to handle it
-    //   // https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html#switch
-    //   const _exhaustiveCheck: never = element.label
-    //   return _exhaustiveCheck
+    default:
+      // make typescript yell at us if we add a new label and forget to handle it
+      // https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html#switch
+      const _exhaustiveCheck: never = element.label
+      return _exhaustiveCheck
   }
   // ultimate fallback, hope not to get here
   return null
+}
+
+export class TreeItemWithDescription extends vscode.TreeItem {
+  constructor(
+    public readonly label?: string,
+    public readonly description?: string,
+    public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
+    public readonly command?: vscode.Command,
+  ) {
+    super(label || '', collapsibleState)
+  }
 }
 
 type TopLevelLabels = 'Deploys' | 'Forms' | 'Functions' | 'Performance'
 // we're going to have to do a lot better than this but this is an mvp
 export class TopLevelItem extends vscode.TreeItem {
   constructor(
-    public readonly label: TopLevelLabels | string,
+    public readonly label: TopLevelLabels,
     public readonly description: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
     public readonly command?: vscode.Command,
@@ -195,7 +193,7 @@ export class TopLevelItem extends vscode.TreeItem {
   //   return `this description is for ${this.version}`
   // }
 
-  // // todo: add icons for deploys
+  // // TODO: add icons for deploys
   // iconPath = {
   //   light: path.join(__filename, '..', '..', 'resources', 'light', 'dependency.svg'),
   //   dark: path.join(__filename, '..', '..', 'resources', 'dark', 'dependency.svg'),
