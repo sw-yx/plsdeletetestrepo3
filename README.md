@@ -14,7 +14,7 @@ TODO: add feature list, demo gif
 
 1. Clone this repo and install dependencies
 2. press F5 (fn + F5 on a Mac) to open a new vscode instance with your extension installed
-3. if you change code, you probably need to reload the vscode instance. Cmd+Shift+P and select "Developer: Reload"
+3. if you change code, you probably need to reload the vscode instance. you can hit the green reload arrow in the box at the top, or alternatively `Cmd+Shift+P` and select "Developer: Reload"
 
 ---
 

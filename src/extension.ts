@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode'
-import { NetlifyTreeView } from './deploys'
+import { NetlifyTreeView } from './treeview'
 
 // this method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
