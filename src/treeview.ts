@@ -1,4 +1,6 @@
 import * as vscode from 'vscode'
+import { TreeItemWithDescription } from './shared'
+import { createDeployTreeItem } from './deploys'
 const NetlifyCLIUtilsCommand = require('@netlify/cli-utils')
 
 type NetlifySiteDataType = {
@@ -127,22 +129,7 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevel
   switch (element.label) {
     case 'Deploys':
       const deploys = netlifySite.deploys.slice(0, 5)
-      return deploys.map((deploy) => {
-        const { branch , commit_ref, title: commit_msg, published_at } = deploy
-        // TODO: TARA: check if branch == 'NULL', if it is 'null' it is a manual deploy
-        const short_git_ref = commit_ref && commit_ref.slice(0, 6)
-        const timeStamp = new Date(published_at).toLocaleDateString(undefined, {
-          month: 'short',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: '2-digit',
-        })
-        return new TreeItemWithDescription(
-          `[${branch}] @ ${short_git_ref} ${timeStamp}`,
-          commit_msg,
-          vscode.TreeItemCollapsibleState.None,
-        )
-      })
+      return deploys.map(createDeployTreeItem)
     case 'Forms':
       // TODO: SARAH
       return null
@@ -159,17 +146,6 @@ function handleChildElements(netlifySite: NetlifySiteDataType, element: TopLevel
   }
   // ultimate fallback, hope not to get here
   return null
-}
-
-export class TreeItemWithDescription extends vscode.TreeItem {
-  constructor(
-    public readonly label?: string,
-    public readonly description?: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed,
-    public readonly command?: vscode.Command,
-  ) {
-    super(label || '', collapsibleState)
-  }
 }
 
 type TopLevelLabels = 'Deploys' | 'Forms' | 'Functions' | 'Performance'

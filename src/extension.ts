@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode'
 import { NetlifyTreeView } from './treeview'
+import * as Deploys from './deploys'
 
 // this method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -16,6 +17,26 @@ export function activate(context: vscode.ExtensionContext) {
       console.log(item.label)
     })
   })
+
+  // initialize commands available at the top level
+  // example code https://github.com/microsoft/vscode-extension-samples/blob/12a3528bae5fd7f97c9966fba2daede8b8adde31/tree-view-sample/src/extension.ts#L18
+  vscode.commands.registerCommand('netlifyTreeView.sayHelloSarah', () =>
+    vscode.window.showInformationMessage(`Hi Sarah!`),
+  )
+  vscode.commands.registerCommand('netlifyTreeView.sayHelloTara', () =>
+    vscode.window.showInformationMessage(`Hi Tara!`),
+  )
+  vscode.commands.registerCommand('netlifyTreeView.sayHelloPhil', () =>
+    vscode.window.showInformationMessage(`Hi Phil!`),
+  )
+  vscode.commands.registerCommand('netlifyTreeView.refreshEntry', () =>
+    vscode.window.showInformationMessage(`Successfully called refresh entry.`),
+  )
+
+  // initialize commands available only inside each feature
+  Deploys.registerCommands()
+  // Forms.registerCommands() // todo
+  // Functions.registerCommands() // todo
 
   // Initialize treeview
   // we use workspaceFolders instead of vscode.workspace.rootPath because of
