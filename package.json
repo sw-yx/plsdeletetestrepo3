@@ -18,6 +18,31 @@
       {
         "command": "extension.netlifyInit",
         "title": "Initialize Netlify"
+      },
+      {
+        "command": "netlifyTreeView.refreshEntry",
+        "title": "Refresh"
+      },
+      {
+        "command": "netlifyTreeView.sayHelloSarah",
+        "title": "Say Hi To Sarah"
+      },
+      {
+        "command": "netlifyTreeView.sayHelloTara",
+        "title": "Say Hi To Tara"
+      },
+      {
+        "command": "netlifyTreeView.sayHelloPhil",
+        "title": "Say Hi To Phil"
+      },
+      {
+        "command": "netlifyTreeView.deploy.Publish",
+        "title": "Publish Deploy",
+        "todo": "use icon https://code.visualstudio.com/api/extension-guides/tree-view#view-actions"
+      },
+      {
+        "command": "netlifyTreeView.deploy.Lock",
+        "title": "Lock"
       }
     ],
     "viewsContainers": {
@@ -32,8 +57,40 @@
     "views": {
       "netlifytest": [
         {
-          "id": "showDeploys",
-          "name": "Show Deploys"
+          "id": "netlifyTreeView",
+          "name": "Netlify Extension Tree View"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "netlifyTreeView.refreshEntry",
+          "when": "view == netlifyTreeView",
+          "group": "navigation"
+        },
+        {
+          "command": "netlifyTreeView.sayHelloSarah",
+          "when": "view == netlifyTreeView"
+        },
+        {
+          "command": "netlifyTreeView.sayHelloTara",
+          "when": "view == netlifyTreeView"
+        },
+        {
+          "command": "netlifyTreeView.sayHelloPhil",
+          "when": "view == netlifyTreeView"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "netlifyTreeView.deploy.Publish",
+          "when": "view == netlifyTreeView && viewItem == DeployTreeItem",
+          "group": "inline"
+        },
+        {
+          "command": "netlifyTreeView.deploy.Lock",
+          "when": "view == netlifyTreeView && viewItem == DeployTreeItem"
         }
       ]
     }
@@ -57,6 +114,7 @@
     "vscode-test": "^1.0.2"
   },
   "dependencies": {
+    "@netlify/cli-utils": "^1.1.0",
     "netlify": "^2.4.8"
   }
 }
