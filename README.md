@@ -5,6 +5,7 @@ Netlify DX VSCode Extension
 - Repo: https://github.com/sdras/netlify-ext-setup
 - Project: https://github.com/netlify/developer-experience/projects/3
 - Notion: https://www.notion.so/netlify/VS-Code-Kickoff-59d1a073cad74d72b8e8038550ace917
+- **Overview of Codebase (New!)**: https://www.dropbox.com/s/d8ju388657nfgvj/vscodeextension_swyx-tzm.mp4?dl=0
 
 ## Features
 
