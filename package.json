@@ -20,7 +20,7 @@
         "title": "Initialize Netlify"
       },
       {
-        "command": "netlifyTreeView.refreshEntry",
+        "command": "netlifyTreeView.refreshSiteData",
         "title": "Refresh"
       },
       {
@@ -32,8 +32,14 @@
         "title": "Say Hi To Tara"
       },
       {
-        "command": "netlifyTreeView.sayHelloPhil",
-        "title": "Say Hi To Phil"
+        "command": "netlifyTreeView.openToNetlify",
+        "when": "isNetlifySiteLinked == true",
+        "title": "Open Netlify Admin UI"
+      },
+      {
+        "command": "netlifyTreeView.openToSite",
+        "when": "isNetlifySiteLinked == true",
+        "title": "Open to Site"
       },
       {
         "command": "netlifyTreeView.deploy.Publish",
@@ -65,7 +71,7 @@
     "menus": {
       "view/title": [
         {
-          "command": "netlifyTreeView.refreshEntry",
+          "command": "netlifyTreeView.refreshSiteData",
           "when": "view == netlifyTreeView",
           "group": "navigation"
         },
@@ -78,8 +84,12 @@
           "when": "view == netlifyTreeView"
         },
         {
-          "command": "netlifyTreeView.sayHelloPhil",
-          "when": "view == netlifyTreeView"
+          "command": "netlifyTreeView.openToNetlify",
+          "when": "view == netlifyTreeView && isNetlifySiteLinked == true"
+        },
+        {
+          "command": "netlifyTreeView.openToSite",
+          "when": "view == netlifyTreeView && isNetlifySiteLinked == true"
         }
       ],
       "view/item/context": [
@@ -98,6 +108,7 @@
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
+    "build": "npm run compile",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile",
     "test": "node ./out/test/runTest.js"

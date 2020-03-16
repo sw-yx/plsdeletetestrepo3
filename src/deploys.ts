@@ -1,5 +1,4 @@
 import * as vscode from 'vscode'
-import { TreeItemWithDescription } from './shared'
 
 // todo: do stuff with netlify api!
 // const NetlifyCLIUtilsCommand = require('@netlify/cli-utils')
@@ -21,9 +20,13 @@ export function createDeployTreeItem(deploy: Deploy) {
     hour: 'numeric',
     minute: '2-digit',
   })
-  const label = `[${branch}] @ ${short_git_ref} ${timeStamp}`
-  const newItem = new TreeItemWithDescription(label, commit_msg, vscode.TreeItemCollapsibleState.None)
-  newItem.contextValue = 'DeployTreeItem'
+  const label = `${branch} @ ${short_git_ref} ${timeStamp}`
+  const newItem = new vscode.TreeItem(
+    label,
+    vscode.TreeItemCollapsibleState.None
+  );
+  newItem.description = commit_msg
+  newItem.contextValue = 'DeployTreeItem';
   newItem.tooltip = `This is a deploy for ${label}`
   return newItem
 }

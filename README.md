@@ -9,13 +9,29 @@ Netlify DX VSCode Extension
 
 ## Features
 
-TODO: add feature list, demo gif
+For projects with Linked Sites:
 
-## Local Development
+- Context Menu: Open to Admin UI
+- Context Menu: Open to Site
+- Tree View: Show 5 recent Deploys*
+- Tree View: Show data on all Functions*
+- Tree View: Show data on all Forms*
 
-1. Clone this repo and install dependencies
-2. press F5 (fn + F5 on a Mac) to open a new vscode instance with your extension installed
-3. if you change code, you probably need to reload the vscode instance. you can hit the green reload arrow in the box at the top, or alternatively `Cmd+Shift+P` and select "Developer: Reload"
+*from currently published deploy
+
+For projects that are not yet linked:
+
+- Link Site
+
+## Local Development For Contributors
+
+1. Clone this repo 
+2. `yarn` to install dependencies
+2. `yarn watch` to run an initial build and rebuild on changing code
+3. press F5 (fn + F5 on a Mac) to open a new vscode instance with your extension installed
+4. If you change code, you probably need to reload the vscode instance. you can hit the green reload arrow in the box at the top, or alternatively `Cmd+Shift+P` and select "Developer: Reload"
+
+As you see develop the extension, the logs and errors for your extension will be visible in the "Debug Console", not in "Output".
 
 ---
 
@@ -34,22 +50,15 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- We assume you are logged in through the Netlify CLI. this reuses Netlify CLI code so that you dont have to relogin.
+- **Single Workspace**: VS Code has [no notion of primary workspaces](https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#eliminating-rootpath), so if you have multiple workspaces open we just warn you and pick the first one. We might tweak this logic in future to give you more choice.
 
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Basic features -link to site
 
 ---
