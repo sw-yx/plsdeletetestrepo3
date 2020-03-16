@@ -48,7 +48,7 @@ Initial release of ...
 
 Fixed issue #.
 
-### 1.1.0
+### 1.1.0x
 
 Added features X, Y, and Z.
 
